@@ -5,5 +5,11 @@
     "bluebird": "^3.4.7",
     "superagent": "^3.4.1",
     "ws": "^2.0.2"
+  },
+  "scripts": {
+    "docs:md": "jsdoc2md \"lib/**/*.js\" > api.md"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^2.0.1"
   }
 }
