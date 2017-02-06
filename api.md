@@ -44,7 +44,7 @@ The main Client object
 
 * [Client](#Client)
     * [new Client(email, password, [options])](#new_Client_new)
-    * [.connect()](#Client+connect) ⇒
+    * [.connect()](#Client+connect) ⇒ <code>Promise</code>
     * [.joinRoom(slug)](#Client+joinRoom) ⇒ <code>Promise</code>
     * [.sendChat(content, [timeout])](#Client+sendChat) ⇒ <code>Promise</code>
     * [.banUser(userID, [time], [reason])](#Client+banUser) ⇒ <code>Promise</code>
@@ -88,11 +88,10 @@ Create a new Client
 
 <a name="Client+connect"></a>
 
-### client.connect() ⇒
+### client.connect() ⇒ <code>Promise</code>
 Establishes the Websocket Conncetion to plug.dj
 
 **Kind**: instance method of <code>[Client](#Client)</code>  
-**Returns**: Promise  
 <a name="Client+joinRoom"></a>
 
 ### client.joinRoom(slug) ⇒ <code>Promise</code>
