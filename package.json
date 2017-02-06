@@ -7,8 +7,9 @@
     "ws": "^2.0.2"
   },
   "scripts": {
+    "docs": "npm run docs:md && npm run docs:html",
     "docs:md": "jsdoc2md \"lib/**/*.js\" > api.md",
-    "docs":"jsdoc -r -c jsdoc.conf.json"
+    "docs:html": "jsdoc -r -c jsdoc.conf.json"
   },
   "devDependencies": {
     "jsdoc": "^3.4.3",
