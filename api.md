@@ -46,9 +46,9 @@ The main Client object
     * [new Client(email, password, [options])](#new_Client_new)
     * [.connect()](#Client+connect) ⇒ <code>Promise</code>
     * [.joinRoom(slug)](#Client+joinRoom) ⇒ <code>Promise</code>
-    * [.sendChat(content, [timeout])](#Client+sendChat) ⇒ <code>Promise</code>
+    * [.sendChat(content)](#Client+sendChat) ⇒ <code>Promise</code>
     * [.banUser(userID, [time], [reason])](#Client+banUser) ⇒ <code>Promise</code>
-    * [.skipSong(userID, [historyID])](#Client+skipSong) ⇒ <code>Promise</code>
+    * [.skipSong([userID], [historyID])](#Client+skipSong) ⇒ <code>Promise</code>
     * [.addUser(userID)](#Client+addUser) ⇒ <code>Promise</code>
     * [.removeUser(userID)](#Client+removeUser) ⇒ <code>Promise</code>
     * [.moveUser(userID, position)](#Client+moveUser) ⇒ <code>Promise</code>
@@ -105,7 +105,7 @@ Joins a room (community)
 
 <a name="Client+sendChat"></a>
 
-### client.sendChat(content, [timeout]) ⇒ <code>Promise</code>
+### client.sendChat(content) ⇒ <code>Promise</code>
 Sends a message in chat
 
 **Kind**: instance method of <code>[Client](#Client)</code>  
@@ -113,7 +113,6 @@ Sends a message in chat
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>String</code> | The message content |
-| [timeout] | <code>Number</code> | Time after the message is deleted. |
 
 <a name="Client+banUser"></a>
 
@@ -130,14 +129,14 @@ Bans an user from the room.
 
 <a name="Client+skipSong"></a>
 
-### client.skipSong(userID, [historyID]) ⇒ <code>Promise</code>
+### client.skipSong([userID], [historyID]) ⇒ <code>Promise</code>
 Skip the current playback
 
 **Kind**: instance method of <code>[Client](#Client)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| userID | <code>Number</code> | The id of the current dj |
+| [userID] | <code>Number</code> | The id of the current dj |
 | [historyID] | <code>String</code> | The id of the current playback |
 
 <a name="Client+addUser"></a>

@@ -1,0 +1,3 @@
+# Plugging you in...
+
+`Plugging you in` is aimed to be an OOP-based client for plug.dj. It's still under development, but some basic functions are already working. You can find a jsdoc-based documentation in [api.md](api.md)
