@@ -9,10 +9,56 @@
   "scripts": {
     "docs": "npm run docs:md && npm run docs:html",
     "docs:md": "jsdoc2md \"lib/**/*.js\" > api.md",
-    "docs:html": "jsdoc -r -c jsdoc.conf.json"
+    "docs:html": "jsdoc -r -c jsdoc.conf.json",
+    "test": "eslint \"**/*.js\" && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\""
   },
   "devDependencies": {
+    "eslint": "^3.15.0",
     "jsdoc": "^3.4.3",
     "jsdoc-to-markdown": "^2.0.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "semi": [
+        2,
+        "always",
+        {
+          "omitLastInOneLineBlock": true
+        }
+      ],
+      "no-unused-vars": [
+        2,
+        {
+          "argsIgnorePattern": "^_",
+          "caughtErrors": "none"
+        }
+      ],
+      "no-control-regex": 0,
+      "global-require": 1,
+      "camelcase": 1,
+      "dot-notation": 1,
+      "no-else-return": 2,
+      "no-plusplus": 2,
+      "constructor-super": 2,
+      "prefer-arrow-callback": 1,
+      "object-shorthand": 2,
+      "object-curly-spacing": 1,
+      "object-property-newline": [
+        1,
+        {
+          "allowMultiplePropertiesPerLine": true
+        }
+      ],
+      "no-var": 2,
+      "no-inner-declarations": 0
+    }
   }
 }
