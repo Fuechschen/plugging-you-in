@@ -3,8 +3,8 @@
   "version": "0.0.2",
   "description": "An OOP-based client for plug.dj",
   "license": "MIT",
-  "main":"lib/Client.js",
-  "author":"Fuechschen <johannes@diehl.io> (https://diehl.io)",
+  "main": "lib/Client.js",
+  "author": "Fuechschen <johannes@diehl.io> (https://diehl.io)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fuechschen/plugging-you-in.git"
@@ -12,9 +12,16 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "keywords": ["plug","plug.dj","music","api","bot"],
+  "keywords": [
+    "plug",
+    "plug.dj",
+    "music",
+    "api",
+    "bot"
+  ],
   "dependencies": {
     "bluebird": "^3.4.7",
+    "rolling-rate-limiter": "^0.1.4",
     "superagent": "^3.4.1",
     "ws": "^2.0.2"
   },
