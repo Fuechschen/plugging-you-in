@@ -57,6 +57,7 @@ The main Client object
     * ["socketError"](#Client+event_socketError)
     * ["socketClose"](#Client+event_socketClose)
     * ["rawWS"](#Client+event_rawWS)
+    * ["unknown"](#Client+event_unknown)
     * ["connect"](#Client+event_connect)
     * ["chat"](#Client+event_chat)
     * ["chatDelete"](#Client+event_chatDelete)
@@ -70,6 +71,7 @@ The main Client object
     * ["cycleChange"](#Client+event_cycleChange)
     * ["lockChange"](#Client+event_lockChange)
     * ["vote"](#Client+event_vote)
+    * ["floodApi"](#Client+event_floodApi)
 
 <a name="new_Client_new"></a>
 
@@ -77,14 +79,15 @@ The main Client object
 Create a new Client
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| email | <code>String</code> | The Email to use for login |
-| password | <code>String</code> | the password to use |
-| [options] | <code>Object</code> | An object containing additional settings |
-| [options.useFriends] | <code>Boolean</code> | Whether the bot should distinguish between friends or not |
-| [options.autoConnect] | <code>Boolean</code> | If the bot should automatically establish a socket connection |
-| [options.autoReconnect] | <code>Boolean</code> | If the bot should automatically reopen an errored or closed socket connection |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| email | <code>String</code> |  | The Email to use for login |
+| password | <code>String</code> |  | the password to use |
+| [options] | <code>Object</code> |  | An object containing additional settings |
+| [options.useFriends] | <code>Boolean</code> |  | Whether the bot should distinguish between friends or not |
+| [options.autoConnect] | <code>Boolean</code> |  | If the bot should automatically establish a socket connection |
+| [options.autoReconnect] | <code>Boolean</code> |  | If the bot should automatically reopen an errored or closed socket connection |
+| [options.requestFreeze] | <code>Number</code> | <code>10000</code> | The time all requests are freezed when a ratelimit warning is received. Can not be lower than 1 |
 
 <a name="Client+connect"></a>
 
@@ -221,6 +224,12 @@ Emits the raw packages.
 | --- | --- | --- |
 | data | <code>Object</code> | The data received from plug.dj |
 
+<a name="Client+event_unknown"></a>
+
+### "unknown"
+Emitted when an unknown package is received from plug. This can indicate an outdated version of plugging-you-in
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
 <a name="Client+event_connect"></a>
 
 ### "connect"
@@ -372,6 +381,12 @@ Emitted when someone votes on a song
 | user | <code>[User](#User)</code> | The user who voted |
 | vote | <code>Number</code> | The vote, 1 for woot, -1 for meh |
 
+<a name="Client+event_floodApi"></a>
+
+### "floodApi"
+Emitted when too many api requests are fired. You don't need to handle it if you leave `options.requestFreeze` at the default value, however all actions will be stopped for 10 seconds
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
 <a name="Collection"></a>
 
 ## Collection ⇐ <code>Map</code>
