@@ -10,11 +10,17 @@
 <dt><a href="#Booth">Booth</a></dt>
 <dd><p>Represents a rooms booth settings</p>
 </dd>
+<dt><a href="#ExtendedUser">ExtendedUser</a></dt>
+<dd><p>An user with more information</p>
+</dd>
 <dt><a href="#Media">Media</a></dt>
 <dd><p>Represents a media object</p>
 </dd>
 <dt><a href="#Message">Message</a></dt>
 <dd><p>Represents a single chat message</p>
+</dd>
+<dt><a href="#MinimalUser">MinimalUser</a></dt>
+<dd><p>An user with the minimum of information plug gives</p>
 </dd>
 <dt><a href="#Playback">Playback</a></dt>
 <dd><p>Represents a Play</p>
@@ -568,6 +574,20 @@ Enables queue cycling
 Disables queue cycling
 
 **Kind**: instance method of <code>[Booth](#Booth)</code>  
+<a name="ExtendedUser"></a>
+
+## ExtendedUser
+An user with more information
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| settings | <code>Object</code> | An object containing settings |
+| plugPoints | <code>Number</code> | The current amount of plug points the user has |
+| xp | <code>Number</code> | The current number of experience points the user has |
+
 <a name="Media"></a>
 
 ## Media
@@ -609,6 +629,31 @@ Represents a single chat message
 Deletes this message
 
 **Kind**: instance method of <code>[Message](#Message)</code>  
+<a name="MinimalUser"></a>
+
+## MinimalUser
+An user with the minimum of information plug gives
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>Number</code> | The id of the user. |
+| username | <code>String</code> | The name of the user |
+
+<a name="MinimalUser+ban"></a>
+
+### minimalUser.ban(time, reason) ⇒ <code>Promise</code>
+Bans the user from the community
+
+**Kind**: instance method of <code>[MinimalUser](#MinimalUser)</code>  
+
+| Param | Type |
+| --- | --- |
+| time | <code>Number</code> | 
+| reason | <code>String</code> | 
+
 <a name="Playback"></a>
 
 ## Playback
@@ -651,8 +696,6 @@ Represents a user.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| id | <code>Number</code> | The id of the user. |
-| username | <code>String</code> | The name of the user |
 | role | <code>Number</code> | The role of the user |
 | globalRole | <code>Number</code> | The global role of the user (e.g. Brand Ambassador, Admin) |
 | avatarID | <code>String</code> | The avatar of the user |
