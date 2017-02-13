@@ -46,7 +46,7 @@ The main Client object
 | ready | <code>Boolean</code> | Indicates if the client is ready for rest calls. |
 | room | <code>String</code> | Slug of the current room. |
 | socketStatus | <code>String</code> | The current status of the socket connection |
-| self | <code>[User](#User)</code> | The logged-in user |
+| self | <code>[ExtendedUser](#ExtendedUser)</code> | The logged-in user |
 
 
 * [Client](#Client)
@@ -587,6 +587,7 @@ An user with more information
 | settings | <code>Object</code> | An object containing settings |
 | plugPoints | <code>Number</code> | The current amount of plug points the user has |
 | xp | <code>Number</code> | The current number of experience points the user has |
+| ignores | <code>[Array.&lt;MinimalUser&gt;](#MinimalUser)</code> | An array of users the current user ignores |
 
 <a name="Media"></a>
 
