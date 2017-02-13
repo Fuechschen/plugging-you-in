@@ -39,7 +39,8 @@ The main Client object
 | --- | --- | --- |
 | ready | <code>Boolean</code> | Indicates if the client is ready for rest calls. |
 | room | <code>String</code> | Slug of the current room. |
-| socketStatus | <code>String</code> | The current statsu of the socket connection |
+| socketStatus | <code>String</code> | The current status of the socket connection |
+| self | <code>[User](#User)</code> | The logged-in user |
 
 
 * [Client](#Client)
@@ -54,6 +55,7 @@ The main Client object
     * [.moveUser(userID, position)](#Client+moveUser) ⇒ <code>Promise</code>
     * [.deleteMessage(chatID)](#Client+deleteMessage) ⇒ <code>Promise</code>
     * ["ready"](#Client+event_ready)
+    * ["joinedRoom"](#Client+event_joinedRoom)
     * ["socketError"](#Client+event_socketError)
     * ["socketClose"](#Client+event_socketClose)
     * ["rawWS"](#Client+event_rawWS)
@@ -133,7 +135,7 @@ Bans an user from the room.
 <a name="Client+skipSong"></a>
 
 ### client.skipSong([userID], [historyID]) ⇒ <code>Promise</code>
-Skip the current playback
+Skips the current playback
 
 **Kind**: instance method of <code>[Client](#Client)</code>  
 
@@ -191,6 +193,12 @@ Deletes a chat message
 
 ### "ready"
 Emitted when the client is ready to make rest calls
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_joinedRoom"></a>
+
+### "joinedRoom"
+Emitted when a room was joined and the caches were filled.
 
 **Kind**: event emitted by <code>[Client](#Client)</code>  
 <a name="Client+event_socketError"></a>
@@ -593,6 +601,7 @@ Represents a single chat message
 | content | <code>String</code> | The message content. |
 | user | <code>[User](#User)</code> | The user who sent the message. |
 | time | <code>Date</code> | The time the message was received. |
+| mentioned | <code>Boolean</code> | Indicates if the bot was mentioned |
 
 <a name="Message+delete"></a>
 
@@ -655,6 +664,7 @@ Represents a user.
 | blurb | <code>String</code> | The users profile description |
 | slug | <code>String</code> | A flattend and url-friendly version of the username |
 | level | <code>Number</code> | The level of the user |
+| mention | <code>String</code> | The mention for that user |
 
 
 * [User](#User)
