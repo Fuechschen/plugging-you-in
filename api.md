@@ -7,6 +7,9 @@
 <dt><a href="#Collection">Collection</a> ⇐ <code>Map</code></dt>
 <dd><p>Hold a bunch of something</p>
 </dd>
+<dt><a href="#Ban">Ban</a></dt>
+<dd><p>Represents a ban</p>
+</dd>
 <dt><a href="#Booth">Booth</a></dt>
 <dd><p>Represents a rooms booth settings</p>
 </dd>
@@ -80,6 +83,15 @@ The main Client object
     * ["lockChange"](#Client+event_lockChange)
     * ["vote"](#Client+event_vote)
     * ["floodApi"](#Client+event_floodApi)
+    * ["floodChat"](#Client+event_floodChat)
+    * ["slowMode"](#Client+event_slowMode)
+    * ["earn"](#Client+event_earn)
+    * ["gifted"](#Client+event_gifted)
+    * ["ban"](#Client+event_ban)
+    * ["addDj"](#Client+event_addDj)
+    * ["userBan"](#Client+event_userBan)
+    * ["moveUser"](#Client+event_moveUser)
+    * ["skip"](#Client+event_skip)
 
 <a name="new_Client_new"></a>
 
@@ -95,7 +107,10 @@ Create a new Client
 | [options.useFriends] | <code>Boolean</code> |  | Whether the bot should distinguish between friends or not |
 | [options.autoConnect] | <code>Boolean</code> |  | If the bot should automatically establish a socket connection |
 | [options.autoReconnect] | <code>Boolean</code> |  | If the bot should automatically reopen an errored or closed socket connection |
-| [options.requestFreeze] | <code>Number</code> | <code>10000</code> | The time all requests are freezed when a ratelimit warning is received. Can not be lower than 1 |
+| [options.requestFreeze] | <code>Number</code> | <code>1000</code> | The time all requests are freezed when a ratelimit warning is received. Can not be lower than 1 |
+| [options.chatFreeze] | <code>Number</code> | <code>1000</code> | The time all chatmessages are freezed when receiving a "floodChat" event |
+| [options.ignoreRateLimits] | <code>Boolean</code> | <code>false</code> | Whether to respect plug.dj's rate limits or not. It's not recommended to use this option except when you are having your own handling for rate limits. |
+| [options.updateNotification] | <code>Boolean</code> | <code>false</code> | Whether you want to notified about (possible) updates. |
 
 <a name="Client+connect"></a>
 
@@ -135,13 +150,13 @@ Bans an user from the room.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | userID | <code>Number</code> |  | The id of the user |
-| [time] | <code>String</code> | <code>&#x27;d&#x27;</code> | The ban duration, defaults to one day |
+| [time] | <code>String</code> | <code>&#x27;d&#x27;</code> | The ban duration, defaults to one day ('h' for one hour, 'd' for a day, 'f' for forever) |
 | [reason] | <code>Number</code> | <code>1</code> | The ban reason, defaults to 'violating community rules' |
 
 <a name="Client+skipSong"></a>
 
 ### client.skipSong([userID], [historyID]) ⇒ <code>Promise</code>
-Skips the current playback
+Skips the current playback. All fields are automatically filled in, however it is recommended to provide at least the userID to prevent wrong skips
 
 **Kind**: instance method of <code>[Client](#Client)</code>  
 
@@ -247,7 +262,7 @@ Emitted when an unknown package is received from plug. This can indicate an outd
 <a name="Client+event_connect"></a>
 
 ### "connect"
-Emited when the socket connection is up.
+Emitted when the socket connection is up.
 
 **Kind**: event emitted by <code>[Client](#Client)</code>  
 **Properties**
@@ -401,6 +416,111 @@ Emitted when someone votes on a song
 Emitted when too many api requests are fired. You don't need to handle it if you leave `options.requestFreeze` at the default value, however all actions will be stopped for 10 seconds
 
 **Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_floodChat"></a>
+
+### "floodChat"
+Emitted when you are sending too many chat messages and plugging-you-in isn't good enough at limiting you. Plugging-you-in will handle this by stopping to send messages entirely for a few seconds
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_slowMode"></a>
+
+### "slowMode"
+Emitted when chat enters slow mode.
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_earn"></a>
+
+### "earn"
+Emitted when the bot earns experience/plug points or levels up
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| earn | <code>Object</code> |  |
+| earn.xp | <code>Number</code> | The new amount of xp |
+| earn.pp | <code>Number</code> | The new amount of plug points |
+| earn.level | <code>Number</code> | The new level |
+
+<a name="Client+event_gifted"></a>
+
+### "gifted"
+Emitted when someone gifts plug points to someone
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| sender | <code>[User](#User)</code> | The user who sent the gift |
+| receiver | <code>[User](#User)</code> | The user who received the gift |
+
+<a name="Client+event_ban"></a>
+
+### "ban"
+Emitted when you are banned from a community
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| ban | <code>[Ban](#Ban)</code> | The ban object |
+
+<a name="Client+event_addDj"></a>
+
+### "addDj"
+Emitted when a moderator adds someone to the queue. This also fires a queueUpdate-event
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| user | <code>[User](#User)</code> | The user who got added |
+| moderator | <code>[User](#User)</code> | The Moderator |
+
+<a name="Client+event_userBan"></a>
+
+### "userBan"
+Emitted when a moderator bans someone from the room
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| ban | <code>[Ban](#Ban)</code> | The ban |
+| moderator | <code>[User](#User)</code> |  |
+
+<a name="Client+event_moveUser"></a>
+
+### "moveUser"
+Emitted when a moderator moves someone in the queue. This also fires a queueUpdate-event
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| user | <code>[User](#User)</code> | The moved user |
+| moderator | <code>[User](#User)</code> |  |
+| newPosition | <code>Number</code> |  |
+| oldPosition | <code>Number</code> |  |
+
+<a name="Client+event_skip"></a>
+
+### "skip"
+Emitted when a moderator skips a song
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| moderator | <code>[User](#User)</code> | 
+
 <a name="Collection"></a>
 
 ## Collection ⇐ <code>Map</code>
@@ -523,6 +643,24 @@ Remove an object
 | obj | <code>Object</code> | The object |
 | obj.id | <code>String</code> | The ID of the object |
 
+<a name="Ban"></a>
+
+## Ban
+Represents a ban
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| duration | <code>String</code> | The ban duration ('h' for one hour, 'd' for a day, 'f' for forever) |
+
+<a name="Ban+remove"></a>
+
+### ban.remove() ⇒ <code>Promise</code>
+Removes this ban.
+
+**Kind**: instance method of <code>[Ban](#Ban)</code>  
 <a name="Booth"></a>
 
 ## Booth
@@ -643,6 +781,11 @@ An user with the minimum of information plug gives
 | id | <code>Number</code> | The id of the user. |
 | username | <code>String</code> | The name of the user |
 
+
+* [MinimalUser](#MinimalUser)
+    * [.ban(time, reason)](#MinimalUser+ban) ⇒ <code>Promise</code>
+    * [.unban()](#MinimalUser+unban) ⇒ <code>Promise</code>
+
 <a name="MinimalUser+ban"></a>
 
 ### minimalUser.ban(time, reason) ⇒ <code>Promise</code>
@@ -652,9 +795,15 @@ Bans the user from the community
 
 | Param | Type |
 | --- | --- |
-| time | <code>Number</code> | 
-| reason | <code>String</code> | 
+| time | <code>String</code> | 
+| reason | <code>Number</code> | 
 
+<a name="MinimalUser+unban"></a>
+
+### minimalUser.unban() ⇒ <code>Promise</code>
+Unbans the user from the community
+
+**Kind**: instance method of <code>[MinimalUser](#MinimalUser)</code>  
 <a name="Playback"></a>
 
 ## Playback
@@ -712,23 +861,10 @@ Represents a user.
 
 
 * [User](#User)
-    * [.ban(time, reason)](#User+ban) ⇒ <code>Promise</code>
     * [.mute(time, reason)](#User+mute) ⇒ <code>Promise</code>
     * [.move(position)](#User+move) ⇒ <code>Promise</code>
     * [.add()](#User+add) ⇒ <code>Promise</code>
     * [.remove()](#User+remove) ⇒ <code>Promise</code>
-
-<a name="User+ban"></a>
-
-### user.ban(time, reason) ⇒ <code>Promise</code>
-Bans the user from the community
-
-**Kind**: instance method of <code>[User](#User)</code>  
-
-| Param | Type |
-| --- | --- |
-| time | <code>Number</code> | 
-| reason | <code>String</code> | 
 
 <a name="User+mute"></a>
 
