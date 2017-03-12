@@ -92,6 +92,13 @@ The main Client object
     * ["userBan"](#Client+event_userBan)
     * ["moveUser"](#Client+event_moveUser)
     * ["skip"](#Client+event_skip)
+    * ["killSession"](#Client+event_killSession)
+    * ["levelUp"](#Client+event_levelUp)
+    * ["maintenance"](#Client+event_maintenance)
+    * ["maintenanceAlert"](#Client+event_maintenanceAlert)
+    * ["plugMessage"](#Client+event_plugMessage)
+    * ["plugUpdate"](#Client+event_plugUpdate)
+    * ["selfSkip"](#Client+event_selfSkip)
 
 <a name="new_Client_new"></a>
 
@@ -520,6 +527,72 @@ Emitted when a moderator skips a song
 | Name | Type |
 | --- | --- |
 | moderator | <code>[User](#User)</code> | 
+
+<a name="Client+event_killSession"></a>
+
+### "killSession"
+Emitted when the socket server kills the session
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_levelUp"></a>
+
+### "levelUp"
+Emitted when the logged in account levels up
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| newLevel | <code>Number</code> | 
+
+<a name="Client+event_maintenance"></a>
+
+### "maintenance"
+Emitted when plug.dj goes into maintenance mode
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_maintenanceAlert"></a>
+
+### "maintenanceAlert"
+Emitted when plug.dj is about to go into maintenance mode
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| time | <code>Number</code> | time til maintenance mode in minutes |
+
+<a name="Client+event_plugMessage"></a>
+
+### "plugMessage"
+Emitted when plug.dj sends a broadcast
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| message | <code>String</code> | 
+
+<a name="Client+event_plugUpdate"></a>
+
+### "plugUpdate"
+Emitted when plig.dj gets updated.
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_selfSkip"></a>
+
+### "selfSkip"
+Emitted when someone skips himself
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| user | <code>[User](#User)</code> | 
 
 <a name="Collection"></a>
 

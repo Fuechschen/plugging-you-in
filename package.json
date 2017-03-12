@@ -1,6 +1,6 @@
 {
   "name": "plugging-you-in",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An OOP-based client for plug.dj",
   "license": "MIT",
   "main": "lib/Client.js",
