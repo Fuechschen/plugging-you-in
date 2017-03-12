@@ -93,6 +93,7 @@ The main Client object
     * ["moveUser"](#Client+event_moveUser)
     * ["skip"](#Client+event_skip)
     * ["killSession"](#Client+event_killSession)
+    * ["error"](#Client+event_error)
     * ["levelUp"](#Client+event_levelUp)
     * ["maintenance"](#Client+event_maintenance)
     * ["maintenanceAlert"](#Client+event_maintenanceAlert)
@@ -534,6 +535,19 @@ Emitted when a moderator skips a song
 Emitted when the socket server kills the session
 
 **Kind**: event emitted by <code>[Client](#Client)</code>  
+<a name="Client+event_error"></a>
+
+### "error"
+Emitted when the client encounters an error which it cannot handle itself
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| error | <code>String</code> &#124; <code>Error</code> | The error or an error message. |
+| err | <code>Error</code> | An error object |
+
 <a name="Client+event_levelUp"></a>
 
 ### "levelUp"
