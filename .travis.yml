@@ -1,6 +1,16 @@
-sudo: false
 language: node_js
+script:
+  - npm run test
+  - npm run docs
 notifications:
   email: false
 node_js:
-  - "6"
+  - "7"
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $PAGES_TOKEN
+  on:
+    branch: master
+  local_dir: out
