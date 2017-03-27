@@ -64,6 +64,7 @@ The main Client object
     * [.moveUser(userID, position)](#Client+moveUser) ⇒ <code>Promise</code>
     * [.deleteMessage(chatID)](#Client+deleteMessage) ⇒ <code>Promise</code>
     * [.setRole(userID, role)](#Client+setRole) ⇒ <code>Promise</code>
+    * [.removeRole(userID)](#Client+removeRole) ⇒ <code>Promise</code>
     * ["ready"](#Client+event_ready)
     * ["joinedRoom"](#Client+event_joinedRoom)
     * ["socketError"](#Client+event_socketError)
@@ -230,6 +231,17 @@ Sets an user as staff
 | --- | --- | --- |
 | userID | <code>Number</code> |  |
 | role | <code>Number</code> | the role, 0 for grey, 1 for res dj, 2 for bouncer, 3 for manager, 4 for co-host, 5 for host |
+
+<a name="Client+removeRole"></a>
+
+### client.removeRole(userID) ⇒ <code>Promise</code>
+Shorthand for {Client}.setRole(userID, 0)
+
+**Kind**: instance method of <code>[Client](#Client)</code>  
+
+| Param | Type |
+| --- | --- |
+| userID | <code>Number</code> | 
 
 <a name="Client+event_ready"></a>
 
@@ -886,6 +898,7 @@ An user with the minimum of information plug gives
     * [.ban(time, reason)](#MinimalUser+ban) ⇒ <code>Promise</code>
     * [.unban()](#MinimalUser+unban) ⇒ <code>Promise</code>
     * [.setRole(role)](#MinimalUser+setRole) ⇒ <code>Promise</code>
+    * [.removeRole()](#MinimalUser+removeRole) ⇒ <code>Promise</code>
 
 <a name="MinimalUser+ban"></a>
 
@@ -916,6 +929,12 @@ Sets the user as staff
 | --- | --- | --- |
 | role | <code>Number</code> | the role, 0 for grey, 1 for res dj, 2 for bouncer, 3 for manager, 4 for co-host, 5 for host |
 
+<a name="MinimalUser+removeRole"></a>
+
+### minimalUser.removeRole() ⇒ <code>Promise</code>
+Shorthand for {MinimalUser}.setStaff(0)
+
+**Kind**: instance method of <code>[MinimalUser](#MinimalUser)</code>  
 <a name="Playback"></a>
 
 ## Playback
