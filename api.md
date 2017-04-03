@@ -28,6 +28,9 @@
 <dt><a href="#Playback">Playback</a></dt>
 <dd><p>Represents a Play</p>
 </dd>
+<dt><a href="#Queue">Queue</a></dt>
+<dd><p>Represents the queue of a room</p>
+</dd>
 <dt><a href="#Room">Room</a></dt>
 <dd><p>Represents a room</p>
 </dd>
@@ -47,7 +50,7 @@ The main Client object
 | Name | Type | Description |
 | --- | --- | --- |
 | ready | <code>Boolean</code> | Indicates if the client is ready for rest calls. |
-| room | <code>String</code> | Slug of the current room. |
+| room | <code>[Room](#Room)</code> | The current room |
 | socketStatus | <code>String</code> | The current status of the socket connection |
 | self | <code>[ExtendedUser](#ExtendedUser)</code> | The logged-in user |
 
@@ -58,10 +61,8 @@ The main Client object
     * [.joinRoom(slug)](#Client+joinRoom) ⇒ <code>Promise</code>
     * [.sendChat(content)](#Client+sendChat) ⇒ <code>Promise</code>
     * [.banUser(userID, [time], [reason])](#Client+banUser) ⇒ <code>Promise</code>
+    * [.unbanUser(userID)](#Client+unbanUser) ⇒ <code>Promise</code>
     * [.skipSong([userID], [historyID])](#Client+skipSong) ⇒ <code>Promise</code>
-    * [.addUser(userID)](#Client+addUser) ⇒ <code>Promise</code>
-    * [.removeUser(userID)](#Client+removeUser) ⇒ <code>Promise</code>
-    * [.moveUser(userID, position)](#Client+moveUser) ⇒ <code>Promise</code>
     * [.deleteMessage(chatID)](#Client+deleteMessage) ⇒ <code>Promise</code>
     * [.setRole(userID, role)](#Client+setRole) ⇒ <code>Promise</code>
     * [.removeRole(userID)](#Client+removeRole) ⇒ <code>Promise</code>
@@ -114,9 +115,9 @@ Create a new Client
 | email | <code>String</code> |  | The Email to use for login |
 | password | <code>String</code> |  | the password to use |
 | [options] | <code>Object</code> |  | An object containing additional settings |
-| [options.useFriends] | <code>Boolean</code> |  | Whether the bot should distinguish between friends or not |
-| [options.autoConnect] | <code>Boolean</code> |  | If the bot should automatically establish a socket connection |
-| [options.autoReconnect] | <code>Boolean</code> |  | If the bot should automatically reopen an errored or closed socket connection |
+| [options.useFriends] | <code>Boolean</code> | <code>false</code> | Whether the bot should distinguish between friends or not |
+| [options.autoConnect] | <code>Boolean</code> | <code>false</code> | If the bot should automatically establish a socket connection |
+| [options.autoReconnect] | <code>Boolean</code> | <code>false</code> | If the bot should automatically reopen an errored or closed socket connection |
 | [options.requestFreeze] | <code>Number</code> | <code>1000</code> | The time all requests are freezed when a ratelimit warning is received. Can not be lower than 1 |
 | [options.chatFreeze] | <code>Number</code> | <code>1000</code> | The time all chatmessages are freezed when receiving a "floodChat" event |
 | [options.ignoreRateLimits] | <code>Boolean</code> | <code>false</code> | Whether to respect plug.dj's rate limits or not. It's not recommended to use this option except when you are having your own handling for rate limits. |
@@ -163,6 +164,17 @@ Bans an user from the room.
 | [time] | <code>String</code> | <code>&#x27;d&#x27;</code> | The ban duration, defaults to one day ('h' for one hour, 'd' for a day, 'f' for forever) |
 | [reason] | <code>Number</code> | <code>1</code> | The ban reason, defaults to 'violating community rules' |
 
+<a name="Client+unbanUser"></a>
+
+### client.unbanUser(userID) ⇒ <code>Promise</code>
+Removes a ban for a user
+
+**Kind**: instance method of <code>[Client](#Client)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userID | <code>Number</code> | The id of the user |
+
 <a name="Client+skipSong"></a>
 
 ### client.skipSong([userID], [historyID]) ⇒ <code>Promise</code>
@@ -174,40 +186,6 @@ Skips the current playback. All fields are automatically filled in, however it i
 | --- | --- | --- |
 | [userID] | <code>Number</code> | The id of the current dj |
 | [historyID] | <code>String</code> | The id of the current playback |
-
-<a name="Client+addUser"></a>
-
-### client.addUser(userID) ⇒ <code>Promise</code>
-Adds an user to the queue
-
-**Kind**: instance method of <code>[Client](#Client)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userID | <code>Number</code> | The id of the user to add |
-
-<a name="Client+removeUser"></a>
-
-### client.removeUser(userID) ⇒ <code>Promise</code>
-Removes an user from the queue
-
-**Kind**: instance method of <code>[Client](#Client)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userID | <code>Number</code> | The id of the user to be removed |
-
-<a name="Client+moveUser"></a>
-
-### client.moveUser(userID, position) ⇒ <code>Promise</code>
-Moves an user in the queue
-
-**Kind**: instance method of <code>[Client](#Client)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userID | <code>Number</code> | The user to move |
-| position | <code>Number</code> | The new position of the user |
 
 <a name="Client+deleteMessage"></a>
 
@@ -950,6 +928,79 @@ Represents a Play
 | media | <code>[Media](#Media)</code> | The media played |
 | user | <code>[User](#User)</code> | The dj |
 
+<a name="Queue"></a>
+
+## Queue
+Represents the queue of a room
+
+**Kind**: global class  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| queue | <code>[Array.&lt;User&gt;](#User)</code> | An ordered array of users being in the queue |
+
+
+* [Queue](#Queue)
+    * [.addUser(userID)](#Queue+addUser) ⇒ <code>Promise</code>
+    * [.removeUser(userID)](#Queue+removeUser) ⇒ <code>Promise</code>
+    * [.moveUser(userID, position)](#Queue+moveUser) ⇒ <code>Promise</code>
+    * [.lock()](#Queue+lock) ⇒ <code>Promise</code>
+    * [.unlock()](#Queue+unlock) ⇒ <code>Promise</code>
+    * [.clear()](#Queue+clear) ⇒ <code>Promise</code>
+
+<a name="Queue+addUser"></a>
+
+### queue.addUser(userID) ⇒ <code>Promise</code>
+Adds an user to the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userID | <code>Number</code> | The id of the user to add |
+
+<a name="Queue+removeUser"></a>
+
+### queue.removeUser(userID) ⇒ <code>Promise</code>
+Removes an user from the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userID | <code>Number</code> | The id of the user to be removed |
+
+<a name="Queue+moveUser"></a>
+
+### queue.moveUser(userID, position) ⇒ <code>Promise</code>
+Moves an user in the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userID | <code>Number</code> | The user to move |
+| position | <code>Number</code> | The new position of the user |
+
+<a name="Queue+lock"></a>
+
+### queue.lock() ⇒ <code>Promise</code>
+Locks the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
+<a name="Queue+unlock"></a>
+
+### queue.unlock() ⇒ <code>Promise</code>
+Unlocks the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
+<a name="Queue+clear"></a>
+
+### queue.clear() ⇒ <code>Promise</code>
+Clears and locks the queue
+
+**Kind**: instance method of <code>[Queue](#Queue)</code>  
 <a name="Room"></a>
 
 ## Room
