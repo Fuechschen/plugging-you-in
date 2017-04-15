@@ -85,6 +85,7 @@ The main Client object
     * ["cycleChange"](#Client+event_cycleChange)
     * ["lockChange"](#Client+event_lockChange)
     * ["vote"](#Client+event_vote)
+    * ["grab"](#Client+event_grab)
     * ["floodApi"](#Client+event_floodApi)
     * ["floodChat"](#Client+event_floodChat)
     * ["slowMode"](#Client+event_slowMode)
@@ -420,6 +421,18 @@ Emitted when someone votes on a song
 | --- | --- | --- |
 | user | <code>[User](#User)</code> | The user who voted |
 | vote | <code>Number</code> | The vote, 1 for woot, -1 for meh |
+
+<a name="Client+event_grab"></a>
+
+### "grab"
+Emitted when an user grabs a song
+
+**Kind**: event emitted by <code>[Client](#Client)</code>  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| user | <code>[User](#User)</code> | The user who grabbed the song |
 
 <a name="Client+event_floodApi"></a>
 
