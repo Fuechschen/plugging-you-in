@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: structures/User.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: structures/User.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let MinimalUser = require('./MinimalUser'),
+    Utils = require('../helpers/Utils');
+
+/**
+ * Represents a user.
+ * @property {Number} role The role of the user
+ * @property {Number} globalRole The global role of the user (e.g. Brand Ambassador, Admin)
+ * @property {String} avatarID The avatar of the user
+ * @property {String} badge The badge of the user
+ * @property {String} subscription The subscription type of the user
+ * @property {Boolean} guest Whether the user is a guest or not
+ * @property {Date} joined When the user created his/her account
+ * @property {String} language The users language
+ * @property {String} [blurb] The users profile description
+ * @property {String} slug A flattend and url-friendly version of the username
+ * @property {Number} level The level of the user
+ * @property {String} mention The mention for that user
+ */
+class User extends MinimalUser {
+    constructor(data, client) {
+        super(data, client);
+
+        this.online = true;
+
+        this.role = data.role || 0;
+        this.globalRole = data.gRole || 0;
+
+        this.avatarID = data.avatarID || "base01";
+        this.badge = data.badge || "";
+
+        this.subscription = data.sub ? 'gold' : data.silver ? 'silver' : 'none';
+
+        this.guest = data.guest || false;
+
+        this.joined = Utils.convertToDate(data.joined);
+        this.language = data.language || "en";
+        this.blurb = Utils.decode(data.blurb) || "";
+        this.slug = data.slug || "";
+        this.level = data.level || 0;
+    }
+
+    /**
+     * Mutes the user
+     * @param {Number} time
+     * @param {String} reason
+     * @returns {Promise}
+     */
+    mute(time, reason) {
+        return this._client.muteUser(this.id, reason, time);
+    }
+
+    /**
+     * Moves the user in the waitlist
+     * @param {Number} position
+     * @returns {Promise}
+     */
+    move(position) {
+        return this._client.moveUser(this.id, position);
+    }
+
+    /**
+     * Adds the user to the waitlst
+     * @returns {Promise}
+     */
+    add() {
+        return this._client.addUser(this.id);
+    }
+
+    /**
+     * Removes the user from the waitlist
+     * @returns {Promise}
+     */
+    remove() {
+        return this._client.removeUser(this.id);
+    }
+
+    get mention() {
+        return `@${this.username}`;
+    }
+
+    toString() {
+        return `[${this.id}:${this.username}]`;
+    }
+}
+
+module.exports = User;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ban.html">Ban</a></li><li><a href="Booth.html">Booth</a></li><li><a href="Client.html">Client</a></li><li><a href="Collection.html">Collection</a></li><li><a href="ExtendedUser.html">ExtendedUser</a></li><li><a href="Media.html">Media</a></li><li><a href="Message.html">Message</a></li><li><a href="MinimalUser.html">MinimalUser</a></li><li><a href="Playback.html">Playback</a></li><li><a href="Queue.html">Queue</a></li><li><a href="Room.html">Room</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="Client.html#event:addDj">addDj</a></li><li><a href="Client.html#event:advance">advance</a></li><li><a href="Client.html#event:ban">ban</a></li><li><a href="Client.html#event:chat">chat</a></li><li><a href="Client.html#event:chatDelete">chatDelete</a></li><li><a href="Client.html#event:connect">connect</a></li><li><a href="Client.html#event:cycleChange">cycleChange</a></li><li><a href="Client.html#event:earn">earn</a></li><li><a href="Client.html#event:error">error</a></li><li><a href="Client.html#event:floodApi">floodApi</a></li><li><a href="Client.html#event:floodChat">floodChat</a></li><li><a href="Client.html#event:friendJoin">friendJoin</a></li><li><a href="Client.html#event:gifted">gifted</a></li><li><a href="Client.html#event:grab">grab</a></li><li><a href="Client.html#event:guestJoin">guestJoin</a></li><li><a href="Client.html#event:guestLeave">guestLeave</a></li><li><a href="Client.html#event:joinedRoom">joinedRoom</a></li><li><a href="Client.html#event:killSession">killSession</a></li><li><a href="Client.html#event:levelUp">levelUp</a></li><li><a href="Client.html#event:lockChange">lockChange</a></li><li><a href="Client.html#event:maintenance">maintenance</a></li><li><a href="Client.html#event:maintenanceAlert">maintenanceAlert</a></li><li><a href="Client.html#event:moveUser">moveUser</a></li><li><a href="Client.html#event:plugMessage">plugMessage</a></li><li><a href="Client.html#event:plugUpdate">plugUpdate</a></li><li><a href="Client.html#event:queueUpdate">queueUpdate</a></li><li><a href="Client.html#event:rawWS">rawWS</a></li><li><a href="Client.html#event:ready">ready</a></li><li><a href="Client.html#event:selfSkip">selfSkip</a></li><li><a href="Client.html#event:skip">skip</a></li><li><a href="Client.html#event:slowMode">slowMode</a></li><li><a href="Client.html#event:socketClose">socketClose</a></li><li><a href="Client.html#event:socketError">socketError</a></li><li><a href="Client.html#event:unknown">unknown</a></li><li><a href="Client.html#event:userBan">userBan</a></li><li><a href="Client.html#event:userJoin">userJoin</a></li><li><a href="Client.html#event:userLeave">userLeave</a></li><li><a href="Client.html#event:vote">vote</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 24 2017 21:52:18 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

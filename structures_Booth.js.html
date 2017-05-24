@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: structures/Booth.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: structures/Booth.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let Base = require('./Base');
+
+/**
+ * Represents a rooms booth settings
+ * @property {Boolean} isLocked Whether the queue is lock or unlocked
+ * @property {Boolean} shouldCycle Whether the queue cycles or not
+ */
+class Booth extends Base {
+    constructor(booth, client) {
+        super(client);
+        this.isLocked = booth.isLocked;
+        this.shouldCycle = booth.shouldCycle;
+    }
+
+    _setLock(lock) {
+        return this.isLocked = lock;
+    }
+
+    _setCycle(cycle) {
+        return this.shouldCycle = cycle;
+    }
+
+    setLock(lock, clear) {
+        return this._client.setLock(lock, clear);
+    }
+
+    setCycle(cycle) {
+        return this._client.setCycle(cycle);
+    }
+
+    /**
+     * Unlocks the queue
+     * @returns {Promise}
+     */
+    unlock() {
+        return this.setLock(false);
+    }
+
+    /**
+     * Locks the queue
+     * @returns {Promise}
+     */
+    lock() {
+        return this.setLock(true);
+    }
+
+    /**
+     * Clears and locks the queue
+     * @returns {Promise}
+     */
+    clear() {
+        return this.setLock(true, true);
+    }
+
+    /**
+     * Enables queue cycling
+     * @returns {Promise}
+     */
+    enableCycle() {
+        return this.setCycle(true);
+    }
+
+    /**
+     * Disables queue cycling
+     * @returns {Promise}
+     */
+    disableCycle() {
+        return this.setCycle(false);
+    }
+}
+
+module.exports = Booth;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Ban.html">Ban</a></li><li><a href="Booth.html">Booth</a></li><li><a href="Client.html">Client</a></li><li><a href="Collection.html">Collection</a></li><li><a href="ExtendedUser.html">ExtendedUser</a></li><li><a href="Media.html">Media</a></li><li><a href="Message.html">Message</a></li><li><a href="MinimalUser.html">MinimalUser</a></li><li><a href="Playback.html">Playback</a></li><li><a href="Queue.html">Queue</a></li><li><a href="Room.html">Room</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="Client.html#event:addDj">addDj</a></li><li><a href="Client.html#event:advance">advance</a></li><li><a href="Client.html#event:ban">ban</a></li><li><a href="Client.html#event:chat">chat</a></li><li><a href="Client.html#event:chatDelete">chatDelete</a></li><li><a href="Client.html#event:connect">connect</a></li><li><a href="Client.html#event:cycleChange">cycleChange</a></li><li><a href="Client.html#event:earn">earn</a></li><li><a href="Client.html#event:error">error</a></li><li><a href="Client.html#event:floodApi">floodApi</a></li><li><a href="Client.html#event:floodChat">floodChat</a></li><li><a href="Client.html#event:friendJoin">friendJoin</a></li><li><a href="Client.html#event:gifted">gifted</a></li><li><a href="Client.html#event:grab">grab</a></li><li><a href="Client.html#event:guestJoin">guestJoin</a></li><li><a href="Client.html#event:guestLeave">guestLeave</a></li><li><a href="Client.html#event:joinedRoom">joinedRoom</a></li><li><a href="Client.html#event:killSession">killSession</a></li><li><a href="Client.html#event:levelUp">levelUp</a></li><li><a href="Client.html#event:lockChange">lockChange</a></li><li><a href="Client.html#event:maintenance">maintenance</a></li><li><a href="Client.html#event:maintenanceAlert">maintenanceAlert</a></li><li><a href="Client.html#event:moveUser">moveUser</a></li><li><a href="Client.html#event:plugMessage">plugMessage</a></li><li><a href="Client.html#event:plugUpdate">plugUpdate</a></li><li><a href="Client.html#event:queueUpdate">queueUpdate</a></li><li><a href="Client.html#event:rawWS">rawWS</a></li><li><a href="Client.html#event:ready">ready</a></li><li><a href="Client.html#event:selfSkip">selfSkip</a></li><li><a href="Client.html#event:skip">skip</a></li><li><a href="Client.html#event:slowMode">slowMode</a></li><li><a href="Client.html#event:socketClose">socketClose</a></li><li><a href="Client.html#event:socketError">socketError</a></li><li><a href="Client.html#event:unknown">unknown</a></li><li><a href="Client.html#event:userBan">userBan</a></li><li><a href="Client.html#event:userJoin">userJoin</a></li><li><a href="Client.html#event:userLeave">userLeave</a></li><li><a href="Client.html#event:vote">vote</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 24 2017 21:52:18 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
